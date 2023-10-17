@@ -1,0 +1,22 @@
+{
+  "name": "6841_e2ee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonnel2308/6841_E2EE.git"
+  },
+  "author": "Nelson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sonnel2308/6841_E2EE/issues"
+  },
+  "homepage": "https://github.com/sonnel2308/6841_E2EE#readme",
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  }
+}
