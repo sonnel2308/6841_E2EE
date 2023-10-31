@@ -2,9 +2,10 @@
   "name": "6841_e2ee",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,10 @@
   },
   "homepage": "https://github.com/sonnel2308/6841_E2EE#readme",
   "dependencies": {
-    "crypto-js": "^4.1.1"
-  }
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  },
+  "type": "module"
 }
