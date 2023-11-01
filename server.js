@@ -1,7 +1,6 @@
-import Express from "express";
-import cors from "cors";
-import { PORT } from "./src/config.js";
-import { encryptMessage } from "./encrypt.js";
+import Express from 'express';
+import cors from 'cors';
+import { PORT } from './src/config.js';
 
 const app = Express();
 
@@ -10,18 +9,12 @@ app.use(cors());
 // Static files https://expressjs.com/en/starter/static-files.html
 app.use(Express.static('dist'));
 
-// Encrypt a message
-app.post('/encrypt', (req, res) => {
+// Send a message.
+app.post('/sendMessage', (req, res) => {
     const message = req.body.message;
-    const key = req.body.key;
-
-    const encrypted = encryptMessage(message, key);
-    console.log("ENCRYPTED MESSAGE:", encrypted);
-    console.log("MESSAGE:", message);
 
     res.json({
-        message,
-        encrypted
+        message
     });
 });
 

@@ -1,19 +1,20 @@
-import { apiCallPost } from "./helper.js";
-import { encryptMessage } from "../encrypt.js";
+import { apiCallPost } from './helper.js';
+import { encryptMessage } from '../encrypt.js';
 
 document.getElementById("message-input").addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         
+        const message = document.getElementById("message-input").value;
+        const key = document.getElementById("encryption-key").value;
+
+        // Encrypt the message on the client-side.
+        const encrypted = encryptMessage(message, key);
+        console.log("client side:", encrypted);
         const body = {
-            "message": document.getElementById("message-input").value,
-            "key": document.getElementById("encryption-key").value
+            "message": encrypted
         }
 
-        // console.log(body.message, body.key);
-        const encrypted = encryptMessage(body.message, body.key);
-        // console.log(encrypted);
-
-        apiCallPost("encrypt", body)
+        apiCallPost("sendMessage", body)
         .then((data) => {
             console.log(data);
         })

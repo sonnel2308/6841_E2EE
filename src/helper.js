@@ -1,4 +1,4 @@
-import { PORT } from "./config.js";
+import { PORT } from './config.js';
 
 export const apiCallPost = (path, body) => {
     return new Promise((resolve, reject) => {

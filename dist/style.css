@@ -1,0 +1,11 @@
+#login {
+    background-color: lightblue;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#incoming-messages {
+    border: 5px solid black;
+    height: 60vh;
+}
