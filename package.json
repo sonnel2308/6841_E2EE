@@ -1,11 +1,12 @@
 {
   "name": "6841_e2ee",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon --watch src/app.js --exec 'npx webpack && node server.js'"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,12 @@
   "dependencies": {
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
-    "express": "^4.18.2",
-    "nodemon": "^3.0.1"
+    "express": "^4.18.2"
   },
-  "type": "module"
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
 }
