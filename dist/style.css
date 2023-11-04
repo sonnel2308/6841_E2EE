@@ -1,8 +1,6 @@
 #login {
     background-color: lightblue;
     padding: 20px;
-    display: flex;
-    justify-content: center;
 }
 
 #incoming-messages {

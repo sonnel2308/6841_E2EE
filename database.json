@@ -1,6 +1,50 @@
 {
-    "users": [
-        "abcasd"
-    ],
-    "messages": []
+    "users": [],
+    "messages": [
+        {
+            "sender": "weweqeqe",
+            "receiver": {},
+            "message": "U2FsdGVkX1/d1xdltNZBZuSCvsDhLmmQikV7cwWfOSA="
+        },
+        {
+            "sender": "weweqeqe",
+            "receiver": "bob",
+            "message": "U2FsdGVkX1+R7DSe0PL4YiFUnmbDgkB8onSKk/qkBWo="
+        },
+        {
+            "sender": "weweqeqe",
+            "receiver": "bob",
+            "message": "U2FsdGVkX19/+JWTsM8R8WCJ4nx+ozg225KbD/iyXLI="
+        },
+        {
+            "sender": "weweqeqe",
+            "receiver": "bob",
+            "message": "U2FsdGVkX1/Ssgw7AbviTsdpNESmaGbHEkHZE/Zrcs0="
+        },
+        {
+            "sender": "weweqeqe",
+            "receiver": "bob",
+            "message": "U2FsdGVkX18ViO2z2YhTnCU1m4+c1JL5VV57OUXGZfI="
+        },
+        {
+            "sender": "weweqeqe",
+            "receiver": "bob",
+            "message": "U2FsdGVkX188wpHBTjYVt/leddJBV/1ZJKiymweBQrI="
+        },
+        {
+            "sender": "weweqeqe",
+            "receiver": "bob",
+            "message": "U2FsdGVkX1/NOv1S3YdlZ6ID5FNnYxNOwBmQcYkWDpc="
+        },
+        {
+            "sender": "weweqeqe",
+            "receiver": "fdsf",
+            "message": "U2FsdGVkX1/xxCDVnO/OEKprUJ9708S9OXv4bIW8PM0="
+        },
+        {
+            "sender": "weweqeqe",
+            "receiver": "fdsf",
+            "message": "U2FsdGVkX1+84GIcFrEPClIxVX77bYA45pggNBHGIpQ="
+        }
+    ]
 }
