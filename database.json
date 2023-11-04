@@ -1,6 +1,9 @@
 {
     "users": [
-        "bob"
+        "bob",
+        "alice",
+        "eve",
+        "john"
     ],
     "messages": [
         {

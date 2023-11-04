@@ -1,7 +1,7 @@
 import Express from 'express';
 import cors from 'cors';
 import { PORT } from './src/config.js';
-import { createUser, sendMessage, getMessages } from './src/service.js';
+import { createUser, sendMessage, getMessages, getUsers } from './src/service.js';
 
 const app = Express();
 
@@ -36,11 +36,19 @@ app.post('/sendMessage', (req, res) => {
 // Get messages.
 app.get('/getMessages', async (req, res) => {
     const user = req.query.user;
-    
     const messages = await getMessages(user);
 
     res.json({
         messages
+    });
+});
+
+// Get users.
+app.get('/getUsers', async (req, res) => {
+    const users = await getUsers();
+
+    res.json({
+        users
     });
 });
 

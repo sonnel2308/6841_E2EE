@@ -18,14 +18,42 @@ const login = () => {
     const body = {
         "user": loginName
     }
+
     apiCallPost("createUser", body)
-    .then((data) => console.log(data))
+    .then((data) => {
+        console.log(data);
+
+        
+
+        location.reload();
+    })
     .catch((error) => console.log(error));
 }
 document.getElementById("login-button").addEventListener("click", login);
 document.getElementById("login-name").addEventListener("keypress", (event) => {
     if (event.key === "Enter") login();
 });
+
+/******************************************************************************
+********************************* List Users **********************************
+******************************************************************************/
+const listUsers = () => {
+    apiCallGet("getUsers")
+    .then((data) => {
+        console.log(data)
+
+        for (const user of data["users"]) {
+            const displayUsers = document.getElementById("user-list");
+            const fragment = document.createDocumentFragment();
+            const userDiv = document.createElement("div");
+            userDiv.textContent = user;
+            fragment.appendChild(userDiv);
+            displayUsers.append(fragment);
+        }
+    })
+    .catch((error) => console.log(error));
+}
+listUsers();
 
 /******************************************************************************
 ******************************** Send Messages ********************************

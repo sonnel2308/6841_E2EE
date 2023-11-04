@@ -24,13 +24,23 @@ const initDatabase = async () => {
     }
 }
 
+// Get all users in the database.
+export const getUsers = async () => {
+    await initDatabase();
+    const users = [];
+    for (const user of database["users"]) {
+        users.push(user);
+    }
+    
+    return users;
+}
+
 // Add user to database.
 export const createUser = async (name) => {
     await initDatabase(); 
-    // if (database["users"].includes(name)) {
-    //     console.log(name, "already exists");
-    //     throw new Error(name, "already exists");
-    // }
+    if (database["users"].includes(name)) {
+        return;
+    }
     database["users"].push(name);
     fs.writeFileSync(databaseFilePath, JSON.stringify(database, null, 4));
 }

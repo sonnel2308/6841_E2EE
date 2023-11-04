@@ -1,6 +1,16 @@
 #login {
+    background-color: lightcyan;
+    padding: 10px 20px;
+}
+
+#user-list {
     background-color: lightblue;
-    padding: 20px;
+    padding: 10px 20px;
+}
+
+#message-input-block {
+    background-color: lightslategray;
+    padding: 10px 20px;
 }
 
 #incoming-messages {

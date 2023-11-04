@@ -7,5 +7,9 @@ export default {
         filename: "main.js",
         path: path.resolve(url.fileURLToPath(new URL('.', import.meta.url)), "dist")
     },
-    mode: "development"
+    mode: "development",
+    target: "node",
+    externals: {
+        crypto: 'crypto',
+    }
 }

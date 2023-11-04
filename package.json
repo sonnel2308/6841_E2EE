@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch src/app.js --exec 'npx webpack && node server.js'"
+    "start": "nodemon -r esm --watch src/app.js --exec 'npx webpack && node server.js'"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   "homepage": "https://github.com/sonnel2308/6841_E2EE#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "crypto-js": "^4.1.1",
+    "crypto-browserify": "^3.12.0",
+    "esm": "^3.2.25",
     "express": "^4.18.2"
   },
   "devDependencies": {
