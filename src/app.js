@@ -1,7 +1,9 @@
-import { apiCallPost } from './helper.js';
+import { apiCallGet, apiCallPost } from './helper.js';
 import { encryptMessage } from '../encrypt.js';
 
-// Login
+/******************************************************************************
+************************************ Login ************************************
+******************************************************************************/
 const displayName = () => {
     const span = document.getElementById("display-username");
     span.textContent = localStorage.getItem("name");
@@ -25,7 +27,9 @@ document.getElementById("login-name").addEventListener("keypress", (event) => {
     if (event.key === "Enter") login();
 });
 
-// Send Messages
+/******************************************************************************
+******************************** Send Messages ********************************
+******************************************************************************/
 const sendMessage = () => {
     const message = document.getElementById("message-input").value;
     const key = document.getElementById("encryption-key").value;
@@ -53,3 +57,26 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
     }
 });
 
+/******************************************************************************
+****************************** Receive Messages *******************************
+******************************************************************************/
+const loadMessages = () => {
+    apiCallGet("getMessages", `user=${localStorage.getItem("name")}`)
+    .then((data) => {
+        console.log(data);
+
+        for (const message of data["messages"]) {
+            const displayMessages = document.getElementById("incoming-messages");
+            const fragment = document.createDocumentFragment();
+            const msgDiv = document.createElement("div");
+            msgDiv.setAttribute("class", "message");
+            msgDiv.textContent = "[" + message["sender"] + "] " + message["message"];
+            fragment.appendChild(msgDiv);
+            displayMessages.appendChild(fragment);
+        }
+
+    })
+    .catch((error) => console.log(error));
+}
+
+loadMessages();

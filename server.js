@@ -1,7 +1,7 @@
 import Express from 'express';
 import cors from 'cors';
 import { PORT } from './src/config.js';
-import { createUser, sendMessage } from './src/service.js';
+import { createUser, sendMessage, getMessages } from './src/service.js';
 
 const app = Express();
 
@@ -22,7 +22,6 @@ app.post('/createUser', (req, res) => {
 
 // Send a message.
 app.post('/sendMessage', (req, res) => {
-    console.log("sending message");
     const sender = req.body.sender;
     const receiver = req.body.receiver;
     const message = req.body.message;
@@ -34,6 +33,16 @@ app.post('/sendMessage', (req, res) => {
     });
 });
 
+// Get messages.
+app.get('/getMessages', async (req, res) => {
+    const user = req.query.user;
+    
+    const messages = await getMessages(user);
+
+    res.json({
+        messages
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

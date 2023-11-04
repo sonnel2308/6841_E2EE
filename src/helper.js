@@ -16,3 +16,19 @@ export const apiCallPost = (path, body) => {
         });
     })
 }
+
+export const apiCallGet = (path, queryString) => {
+    return new Promise((resolve, reject) => {
+        fetch(`http://localhost:${PORT}/${path}?${queryString}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            mode: "cors"
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            data.error ? reject(data.error) : resolve(data);
+        });
+    })
+}

@@ -13,7 +13,7 @@ const initDatabase = async () => {
         const content = fs.readFileSync(databaseFilePath, 'utf-8');
         const parsedDatabase = JSON.parse(content);
         Object.assign(database, parsedDatabase);
-        console.log("database:", database);
+        // console.log("database:", database);
     } catch (error) {
         console.log("Creating database.json");
         database["users"] = [];
@@ -48,5 +48,20 @@ export const sendMessage = async (sender, receiver, message) => {
     fs.writeFileSync(databaseFilePath, JSON.stringify(database, null, 4));
 }
 
+// Get messages sent to a user.
+export const getMessages = async (user) => {
+    await initDatabase();
+
+    const messages = [];
+    for (const message of database["messages"]) {
+        if (message["receiver"] === user) {
+            messages.push(message);
+        }
+    }
+
+    return messages;
+}
+
+// getMessages("bob");
 // createUser("alice");
 // sendMessage("abc", "xyz", "hi guys");

@@ -1,11 +1,8 @@
 {
-    "users": [],
+    "users": [
+        "bob"
+    ],
     "messages": [
-        {
-            "sender": "weweqeqe",
-            "receiver": {},
-            "message": "U2FsdGVkX1/d1xdltNZBZuSCvsDhLmmQikV7cwWfOSA="
-        },
         {
             "sender": "weweqeqe",
             "receiver": "bob",
@@ -45,6 +42,11 @@
             "sender": "weweqeqe",
             "receiver": "fdsf",
             "message": "U2FsdGVkX1+84GIcFrEPClIxVX77bYA45pggNBHGIpQ="
+        },
+        {
+            "sender": "bob",
+            "receiver": "bob",
+            "message": "U2FsdGVkX19Ltt8Ouqvp773yv4LxJjt6AMeqFKQoctY="
         }
     ]
 }

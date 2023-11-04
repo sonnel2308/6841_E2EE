@@ -7,3 +7,9 @@
     border: 5px solid black;
     height: 60vh;
 }
+
+.message {
+    background-color: lightgreen;
+    padding: 5px;
+    margin: 10px;
+}
