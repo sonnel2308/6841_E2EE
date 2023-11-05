@@ -50,7 +50,7 @@ export const createUser = async (name) => {
 export const createSession = async (user1, user2) => {
     await initDatabase();
     const session = {
-        status: "pending",
+        status: "ongoing",
         users: {
             [user1]: {
                 key: null

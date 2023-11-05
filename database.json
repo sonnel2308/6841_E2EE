@@ -1,8 +1,7 @@
 {
     "users": [
-        "bob",
         "alice",
-        "eve"
+        "bob"
     ],
     "sessions": [],
     "messages": []

@@ -1,5 +1,5 @@
 import { apiCallGet, apiCallPost } from './helper.js';
-import { } from '../encrypt.js';
+// import { } from '../encrypt.js';
 
 /******************************************************************************
 ************************************ Login ************************************
@@ -69,10 +69,6 @@ const displaySessions = () => {
             div.textContent = Object.keys(session["users"])[0] + ", " + Object.keys(session["users"])[1]
                 + " [" + session["status"] + "]";
 
-            if (session["users"][name]["key"] !== null) {
-                div.textContent += " sent by " + name;
-            }
-
             fragment.appendChild(div);
             sessionReqDiv.appendChild(fragment);
         }
@@ -86,7 +82,7 @@ const startSession = () => {
     const user2 = document.getElementById("start-session").value;
     if (user2 !== "") {
         const body = {
-            user1, 
+            user1,
             user2
         };
         
@@ -212,6 +208,7 @@ const decryptMessage = (key, messageData) => {
 }
 
 const key = await generateKey();
+console.log(key);
 const encryptedMessage = await encryptMessage(key, "hello world");
 console.log("base64 encoded:", binaryToBase64(encryptedMessage["encryptedMessage"]));
 const decryptedMessage = await(decryptMessage(key, encryptedMessage));
