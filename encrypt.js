@@ -1,23 +1,14 @@
-import crypto from 'crypto';
+// import crypto from 'crypto';
+import forge from 'node-forge';
 
-const MODULUS_LENGTH = 2048;
+const rsa = forge.pki.rsa;
 
-export const generateKeyPair = (passphrase) => {
-    const keys = crypto.generateKeyPairSync("rsa", {
-        modulusLength: MODULUS_LENGTH,
-        publicKeyEncoding: {
-            type: "spki",
-            format: "pem"
-        },
-        privateKeyEncoding: {
-            type: "pkcs8",
-            format: "pem",
-            cipher: "aes-256-cbc",
-            passphrase
-        }
-    });
-
-    return keys;
+export const generateKeyPair = () => {
+    const keys = rsa.generateKeyPair({bits: 2048, workers: 2});
+    return {
+        publicKey: keys.publicKey,
+        privateKey: keys.privateKey
+    };
 }
 
 export const encryptMessage = (message, key) => {
@@ -29,3 +20,4 @@ export const decryptMessage = (message, key) => {
     // return crypto.AES.decrypt(message, key).toString(CryptoJS.enc.Utf8);
     return message;
 }
+console.log(generateKeyPair());

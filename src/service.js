@@ -17,6 +17,7 @@ const initDatabase = async () => {
     } catch (error) {
         console.log("Creating database.json");
         database["users"] = [];
+        database["sessions"] = [];
         database["messages"] = [];
         // console.log("database:", database);
 
@@ -43,6 +44,39 @@ export const createUser = async (name) => {
     }
     database["users"].push(name);
     fs.writeFileSync(databaseFilePath, JSON.stringify(database, null, 4));
+}
+
+// Create a session between two users.
+export const createSession = async (user1, user2) => {
+    await initDatabase();
+    const session = {
+        status: "pending",
+        users: {
+            [user1]: {
+                key: null
+            },
+            [user2]: {
+                key: null
+            }
+        },
+        messages: []
+    }
+    // console.log(session["users"]["user1"]["key"]);
+    database["sessions"].push(session);
+    fs.writeFileSync(databaseFilePath, JSON.stringify(database, null, 4));
+    return session;
+}
+
+// Get a user's sessions.
+export const getSessions = async (user) => {
+    await initDatabase();
+    const sessions = [];
+    for (const session of database["sessions"]) {
+        if (session["users"][user] !== undefined) {
+            sessions.push(session);
+        }
+    }
+    return sessions;
 }
 
 // Send message between two users to database.

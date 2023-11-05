@@ -1,5 +1,5 @@
 import { apiCallGet, apiCallPost } from './helper.js';
-import { encryptMessage } from '../encrypt.js';
+import { encryptMessage, generateKeyPair } from '../encrypt.js';
 
 /******************************************************************************
 ************************************ Login ************************************
@@ -22,9 +22,6 @@ const login = () => {
     apiCallPost("createUser", body)
     .then((data) => {
         console.log(data);
-
-        
-
         location.reload();
     })
     .catch((error) => console.log(error));
@@ -54,6 +51,49 @@ const listUsers = () => {
     .catch((error) => console.log(error));
 }
 listUsers();
+
+/******************************************************************************
+****************************** Manage Sessions ********************************
+******************************************************************************/
+const displayIncSessions = () => {
+    apiCallGet("getSessions", `user=${localStorage.getItem("name")}`)
+    .then((data) => {
+        console.log("SESSIONS", data);
+        const name = localStorage.getItem("name");
+
+        const inSessionsDiv = document.getElementById("in-session-requests");
+        const outSessionsDiv = document.getElementById("out-session-requests");
+
+        for (const session of data["sessions"]) {
+            const fragment = document.createDocumentFragment();
+            const div = document.createElement("div");
+            div.textContent = session;
+            fragment.appendChild(div);
+            if (session["users"][name]["key"] === null) {
+                inSessionsDiv.appendChild(fragment);
+            } else {
+                outSessionsDiv.appendChild(fragment);
+            }
+        }
+    })
+    .catch((error) => console.log(error));
+}
+displayIncSessions();
+
+const startSession = () => {
+    const user1 = localStorage.getItem("name");
+    const user2 = document.getElementById("start-session").value;
+    const body = {user1, user2};
+    
+    apiCallPost("createSession", body)
+    .then((data) => console.log(data))
+    .catch((error) => console.log(error));
+}
+
+document.getElementById("start-session-button").addEventListener("click", startSession);
+document.getElementById("start-session").addEventListener("keypress", (event) => {
+    if (event.key === "Enter") startSession();
+});
 
 /******************************************************************************
 ******************************** Send Messages ********************************
@@ -106,5 +146,21 @@ const loadMessages = () => {
     })
     .catch((error) => console.log(error));
 }
-
 loadMessages();
+
+/******************************************************************************
+******************************* Generate Keys *********************************
+******************************************************************************/
+
+const keyPair = generateKeyPair();
+const displayKeys = document.getElementById("display-keys");
+const fragment = document.createDocumentFragment();
+
+const privateDiv = document.createElement("div");
+privateDiv.textContent = "Private Key: " + keyPair.privateKey;
+fragment.appendChild(privateDiv);
+const publicDiv = document.createElement("div");
+publicDiv.textContent = "Public Key: " + keyPair.publicKey;
+fragment.appendChild(publicDiv);
+
+displayKeys.appendChild(fragment);
