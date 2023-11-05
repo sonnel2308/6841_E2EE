@@ -4,19 +4,6 @@
         "alice",
         "eve"
     ],
-    "sessions": [
-        {
-            "status": "pending",
-            "users": {
-                "bob": {
-                    "key": null
-                },
-                "alice": {
-                    "key": null
-                }
-            },
-            "messages": []
-        }
-    ],
+    "sessions": [],
     "messages": []
 }

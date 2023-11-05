@@ -1,5 +1,5 @@
 import { apiCallGet, apiCallPost } from './helper.js';
-import { encryptMessage, generateKeyPair } from '../encrypt.js';
+import { } from '../encrypt.js';
 
 /******************************************************************************
 ************************************ Login ************************************
@@ -55,39 +55,46 @@ listUsers();
 /******************************************************************************
 ****************************** Manage Sessions ********************************
 ******************************************************************************/
-const displayIncSessions = () => {
+const displaySessions = () => {
     apiCallGet("getSessions", `user=${localStorage.getItem("name")}`)
     .then((data) => {
         console.log("SESSIONS", data);
         const name = localStorage.getItem("name");
 
-        const inSessionsDiv = document.getElementById("in-session-requests");
-        const outSessionsDiv = document.getElementById("out-session-requests");
+        const sessionReqDiv = document.getElementById("session-requests");
 
         for (const session of data["sessions"]) {
             const fragment = document.createDocumentFragment();
             const div = document.createElement("div");
-            div.textContent = session;
-            fragment.appendChild(div);
-            if (session["users"][name]["key"] === null) {
-                inSessionsDiv.appendChild(fragment);
-            } else {
-                outSessionsDiv.appendChild(fragment);
+            div.textContent = Object.keys(session["users"])[0] + ", " + Object.keys(session["users"])[1]
+                + " [" + session["status"] + "]";
+
+            if (session["users"][name]["key"] !== null) {
+                div.textContent += " sent by " + name;
             }
+
+            fragment.appendChild(div);
+            sessionReqDiv.appendChild(fragment);
         }
     })
     .catch((error) => console.log(error));
 }
-displayIncSessions();
+displaySessions();
 
 const startSession = () => {
     const user1 = localStorage.getItem("name");
     const user2 = document.getElementById("start-session").value;
-    const body = {user1, user2};
-    
-    apiCallPost("createSession", body)
-    .then((data) => console.log(data))
-    .catch((error) => console.log(error));
+    if (user2 !== "") {
+        const body = {
+            user1, 
+            user2
+        };
+        
+        apiCallPost("createSession", body)
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+    }
+    displaySessions();
 }
 
 document.getElementById("start-session-button").addEventListener("click", startSession);
@@ -131,8 +138,6 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
 const loadMessages = () => {
     apiCallGet("getMessages", `user=${localStorage.getItem("name")}`)
     .then((data) => {
-        console.log(data);
-
         for (const message of data["messages"]) {
             const displayMessages = document.getElementById("incoming-messages");
             const fragment = document.createDocumentFragment();
@@ -149,18 +154,65 @@ const loadMessages = () => {
 loadMessages();
 
 /******************************************************************************
-******************************* Generate Keys *********************************
+******************************* Cryptography **********************************
 ******************************************************************************/
+const crypto = window.crypto.subtle;
 
-const keyPair = generateKeyPair();
-const displayKeys = document.getElementById("display-keys");
-const fragment = document.createDocumentFragment();
+// Generate a key.
+const generateKey = async () => {
+    return crypto.generateKey({
+        name: 'AES-GCM',
+        length: 256
+    }, true, ['encrypt', 'decrypt']);
+}
 
-const privateDiv = document.createElement("div");
-privateDiv.textContent = "Private Key: " + keyPair.privateKey;
-fragment.appendChild(privateDiv);
-const publicDiv = document.createElement("div");
-publicDiv.textContent = "Public Key: " + keyPair.publicKey;
-fragment.appendChild(publicDiv);
+// Get message encoding.
+const encode = (data) => {
+    let enc = new TextEncoder();
+    return enc.encode(data);
+}
 
-displayKeys.appendChild(fragment);
+// Get message decoding.
+const decode = (data) => {
+    let dec = new TextDecoder();
+    return dec.decode(data);
+}
+
+// Convert from binary to Base64 (for sending to server).
+const binaryToBase64 = (binaryData) => {
+    return window.btoa(String.fromCharCode.apply(null, new Uint8Array(binaryData)));
+}
+
+// Encrypt message.
+const encryptMessage = async (key, message) => {
+    const encoded = encode(message);
+    // Initialisation vector counter.
+    const iv = window.crypto.getRandomValues(new Uint8Array(16));
+
+    const encryptedMessage = await crypto.encrypt(
+        { name: "AES-GCM", iv: iv },
+        key,
+        encoded
+    );
+
+    const encryptedData = {
+        encryptedMessage,
+        iv
+    }
+
+    return encryptedData;
+}
+
+// Decrypt message.
+const decryptMessage = (key, messageData) => {
+    const encryptedMessage = messageData["encryptedMessage"];
+    const iv = messageData["iv"];
+
+    return crypto.decrypt({ name: "AES-GCM", iv: iv }, key, encryptedMessage);
+}
+
+const key = await generateKey();
+const encryptedMessage = await encryptMessage(key, "hello world");
+console.log("base64 encoded:", binaryToBase64(encryptedMessage["encryptedMessage"]));
+const decryptedMessage = await(decryptMessage(key, encryptedMessage));
+console.log("decoded:", decode(decryptedMessage));

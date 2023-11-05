@@ -76,6 +76,7 @@ export const getSessions = async (user) => {
             sessions.push(session);
         }
     }
+    
     return sessions;
 }
 
