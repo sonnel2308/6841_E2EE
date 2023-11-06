@@ -42,9 +42,8 @@ Overall however, I think I at least learned some skills while attempting to impl
 
 ---
 # Security
-This report will now discuss concepts I have considered throughout my attempt at developing an E2EE chat application, roughly outlining:
-- Security concerns of an E2EE chat application that arise in development
-- Public key exchange protocols
+This report will now discuss concepts I have considered throughout my attempt at developing an E2EE chat application, roughly outlining security concerns of an E2EE chat application that arise in development.
+
 ## Security of E2EE Applications
 When developing this project's E2EE chat application, the goal was to deliver an application to the end user with the main purpose of providing secure, confidential communication channels between two users. 
 A user would expect the E2EE application to:
@@ -91,3 +90,4 @@ Throughout the development of my application I considered the possibility of imp
 ---
 # Conclusions
 If I had more time to complete this project, I would have implemented the application on a much smaller scale with a terminal interface, and only built the application up from there rather than setting out to achieve a full stack E2EE chat application and having it unfinished. This would have allowed me to focus on the cryptographic aspects of the project and researched encryption with greater detail. 
+My focus had primarily been centered around how an E2EE could be developed and delivered to an end user when I should have taken more time analysing and experimenting with the cryptographic aspects of the application. 
