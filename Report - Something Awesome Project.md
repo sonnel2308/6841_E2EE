@@ -44,7 +44,7 @@ Overall however, I think I at least learned some skills while attempting to impl
 # Security
 This report will now discuss concepts I have considered throughout my attempt at developing an E2EE chat application, roughly outlining:
 - Security concerns of an E2EE chat application that arise in development
-- Choices of encryption algorithms
+- Public key exchange protocols
 ## Security of E2EE Applications
 When developing this project's E2EE chat application, the goal was to deliver an application to the end user with the main purpose of providing secure, confidential communication channels between two users. 
 A user would expect the E2EE application to:
@@ -55,29 +55,39 @@ These requirements can be satisfied using public key cryptography.
 The Diffie-Hellman key exchange protocol allows two users to establish a shared secret over the public domain which is secure even in the eyes of adversaries due to its mathematical properties using modular arithmetic and exponentiation. 
 As a simple example:
 >Alice and Bob both have their own private keys $a$ and $b$ respectively.
+>
 >They wish to communicate over an encrypted channel, so the server generates and sends a public key $g$ to both clients where all calculations are performed modulo a prime number $n$.
+>
 >Alice and Bob perform their exponentiations to the public key with their private keys to generate $g^a$ and $g^b$ respectively and send these values to the other user over the public server.
+>
 >Alice now has $g^b$ from Bob and exponentiates it to her private key, and Bob has $g^a$ from Alice and exponentiates it to his private key, thus giving Alice $g^{ba}$ and Bob $g^{ab}$.
+>
 >Now, both Alice and Bob have created the key $g^{ab}$, establishing a shared secret between the two without revealing their private keys or the shared secret to the public domain.
+>
 >While attackers are able to view $g$, $n$, $g^a$, $g^b$, they are unable to deduce $a$, $b$, or $g^{ab}$ due to the discrete logarithm problem and the "one-way" nature of modular arithmetic. 
 
 Thus, the E2EE application is able to provide a secure, encrypted method of communication between two clients. 
 
 ### Weaknesses of the Application
 **Authentication**
+
 This approach, however, is still susceptible to man-in-the-middle attacks, and generally does not authenticate the identities of the users from which the messages are sent.
 A solution could possibly be implementing a hash signature from each user to confirm their identities when a session is established.
 
 **Key Management**
+
 Furthermore, an issue arises from the storage of the keys generated from each session. If a user is left to handle the storage of their own keys, it leaves them as a vulnerability to the security of the system due to human errors.
 
 A user may store their session keys on a file on their computer. This opens up an opportunity for an attacker to attack the user's devices rather than cracking the relatively secure encrypted messages.
 
 **Endpoints**
+
 To further expand upon the point above, an attacker could simply instead focus on targeting the endpoints of the communication, for instance bugging or physically attack the user's device. 
 In this case, the security of the E2EE application is rendered insignificant, and the confidentiality of the user's messages is left up to the security of their devices which opens up another range of possible issues such as password security, operating systems, etc. 
 
+## Public Key Encryption
+Throughout the development of my application I considered the possibility of implementing an Elliptic Curve Diffie-Hellman as opposed to a regular Diffie-Hellman key exchange protocol, with the benefit of generating and maintaining much shorter public and private keys, providing practical benefits and efficiency to the application. 
 
 ---
 # Conclusions
-I will now discuss my final thoughts on the approach I have taken in completing this project.
+If I had more time to complete this project, I would have implemented the application on a much smaller scale with a terminal interface, and only built the application up from there rather than setting out to achieve a full stack E2EE chat application and having it unfinished. This would have allowed me to focus on the cryptographic aspects of the project and researched encryption with greater detail. 
